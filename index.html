@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+ <head>
+  <meta charset="UTF-8">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Covid19 - Algérie</title>
+  <meta content="Choropleth Map,Geo Chart,Geo Visualization" name="keywords">
+  <meta content="Devoir IHM - Statistique propagation Covid 48 Wilaya d'Algérie" name="description">
+
+  <link href="css/anychart-ui.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" type="text/css" href="css/anychart-font.min.css"/>
+  <style>html, body, #container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}</style>
+ </head>
+ <body>
+  <div id="container"> 
+  </div>
+  <script src="js/proj4.js"></script>
+  <script src="js/anychart-base.min.js"></script>
+  <script src="js/anychart-map.min.js"></script>
+  <script src="js/anychart-exports.min.js"></script>
+  <script src="js/anychart-ui.min.js"></script>
+  <script src="js/algeria.js"></script>
+  <script type="text/javascript">anychart.onDocumentReady(function() {
+  // create map
+  var map = anychart.map();
+
+  // create data set
+  var dataSet = anychart.data.set(
+      [{"id":"DZ.AR","value":0},
+			{"id":"DZ.AT","value":1},
+			{"id":"DZ.OR","value":2},
+			{"id":"DZ.SB","value":3},
+			{"id":"DZ.TL","value":4},
+			{"id":"DZ.BC","value":5},
+			{"id":"DZ.NA","value":6},
+			{"id":"DZ.TN","value":7},
+			{"id":"DZ.AN","value":8},
+			{"id":"DZ.ET","value":9},
+			{"id":"DZ.JJ","value":10},
+			{"id":"DZ.SK","value":11},
+			{"id":"DZ.IL","value":12},
+			{"id":"DZ.TM","value":13},
+			{"id":"DZ.EB","value":14},
+			{"id":"DZ.1950","value":15},
+			{"id":"DZ.GR","value":16},
+			{"id":"DZ.LG","value":17},
+			{"id":"DZ.OG","value":18},
+			{"id":"DZ.AL","value":19},
+			{"id":"DZ.BM","value":20},
+			{"id":"DZ.TO","value":21},
+			{"id":"DZ.TP","value":22},
+			{"id":"DZ.AD","value":23},
+			{"id":"DZ.CH","value":24},
+			{"id":"DZ.MC","value":25},
+			{"id":"DZ.MG","value":26},
+			{"id":"DZ.RE","value":27},
+			{"id":"DZ.SD","value":28},
+			{"id":"DZ.TR","value":29},
+			{"id":"DZ.TS","value":30},
+			{"id":"DZ.BB","value":31},
+			{"id":"DZ.BJ","value":32},
+			{"id":"DZ.BL","value":33},
+			{"id":"DZ.BU","value":34},
+			{"id":"DZ.BS","value":35},
+			{"id":"DZ.DJ","value":36},
+			{"id":"DZ.MD","value":37},
+			{"id":"DZ.MS","value":38},
+			{"id":"DZ.SF","value":39},
+			{"id":"DZ.BT","value":40,"date":1976},
+			{"id":"DZ.CO","value":41},
+			{"id":"DZ.GL","value":42},
+			{"id":"DZ.KH","value":43},
+			{"id":"DZ.ML","value":44},
+			{"id":"DZ.OB","value":45},
+			{"id":"DZ.SA","value":46},
+			{"id":"DZ.TB","value":47}]
+  );
+
+  // create choropleth series
+  series = map.choropleth(dataSet);
+
+  // set geoIdField to 'id', this field contains in geo data meta properties
+  series.geoIdField('id');
+
+  // set map color settings
+  series.colorScale(anychart.scales.linearColor('#deebf7', '#3182bd'));
+  series.hovered().fill('#addd8e');
+
+ //map.tooltip().useHtml(true);
+  
+ var tooltip = series.tooltip();
+	tooltip.positionMode("point");
+	tooltip.format("Nombre de Cas: {%value} \nDate: {%date}");
+
+  tooltip.titleFormat("Wilaya: {%name}");
+  tooltip.fontColor("red");
+  // set geo data, you can find this map in our geo maps collection
+  // https://cdn.anychart.com/#maps-collection
+  map.geoData(anychart.maps['algeria']);
+
+  //set map container id (div) 
+  map.container('container');
+
+  //enabling zoom
+  var zoomController = anychart.ui.zoom();
+zoomController.target(map);
+zoomController.render();
+
+map.listen('pointClick', function(e) {
+    map.zoomToFeature(e.point.get('id'));
+})
+  //initiate map drawing
+  map.draw();
+});</script>
+ </body>
+</html>
